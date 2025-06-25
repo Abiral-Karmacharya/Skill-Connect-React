@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skill connect signup</title>
+    <link rel="icon" href="./skill_connect.png" />
+    <style>
+      #signup {
+        background-color: #e8d705;
+        height: 200px;
+        width: 400px;
+        position: absolute;
+        top: 15%;
+        left: 36%;
+        border-style: solid;
+        border-color: black;
+        border-radius: 10px;
+      }
+      #norm {
+        background-color: #76d936;
+        height: 300px;
+        width: 150px;
+        position: relative;
+        left: -50px;
+        top: 20px;
+      }
+      body {
+        background-color: white;
+      }
+      label {
+        position: relative;
+      }
+      input {
+        position: relative;
+        height: 20px;
+        background-color: #e8d705;
+        width: 180px;
+      }
+      input::placeholder {
+        text-align: center;
+        color: darkgrey;
+      }
+      #acc {
+        position: relative;
+        left: 100px;
+        top: 50px;
+        height: 25px;
+        width: 180px;
+        background-color: #fcde5b;
+
+        text-align: center;
+      }
+      #btn {
+        position: relative;
+        left: 65px;
+        top: 60px;
+        height: 30px;
+        width: 250px;
+        border-radius: 10px;
+        background-color: #e85a05;
+      }
+      #btn:hover {
+        background-color: bisque;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="signup">
+      <div
+        style="
+          position: relative;
+          top: 30px;
+          left: 80px;
+          height: 50px;
+          width: 250px;
+        "
+      >
+        <label for="name" style="left: 0px; font-size: 30px"
+          >What's Your Name</label
+        >
+        <input
+          type="text"
+          id="name"
+          placeholder="Enter your username"
+          style="right: -20px; top: 0px"
+        />
+      </div>
+      <select name="account" id="acc">
+        <option value="def" selected disabled hidden>Select Account</option>
+        <option value="norm">Normal Account</option>
+        <option value="prem">Premium Account</option>
+      </select>
+      <button id="btn">Proceed</button>
+    </div>
+  </body>
+  <script>
+    let choice = document.getElementById("acc"),
+      name = document.getElementById("name"),
+      btn = document.getElementById("btn");
+    function signup() {
+      if (name.value == "" || choice.value == "def") {
+        alert("Please give correct values");
+      } else {
+        console.log(choice.value);
+      }
+    }
+    btn.onclick = signup;
+  </script>
+</html>

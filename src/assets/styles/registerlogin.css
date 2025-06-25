@@ -1,0 +1,52 @@
+#registerlogin {
+  background-color: #e8d705;
+  height: 400px;
+  width: 400px;
+  position: absolute;
+  top: 15%;
+  left: 36%;
+  border-style: solid;
+  border-color: black;
+  border-radius: 10px;
+}
+
+#heading {
+  position: relative;
+  left: 140px;
+  top: 20px;
+  margin: 0;
+  height: 30px;
+  width: 150px;
+  font-size: 20pt;
+  color: black;
+  font-family: "merriweather_regular";
+}
+
+#input {
+  position: relative;
+  top: 80px;
+  left: 80px;
+  height: 50px;
+  width: 250px;
+}
+
+input {
+  position: relative;
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+  height: 20px;
+  background-color: #e8d705;
+  width: 180px;
+  text-align: center;
+  color: black;
+}
+input::placeholder {
+  text-align: center;
+  color: black;
+}
+
+@font-face {
+  font-family: "merriweather_regular";
+  src: url("../fonts/merriweather_regular.ttf");
+}

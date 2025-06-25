@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skill connect login</title>
+    <link rel="icon" href="./skill_connect.png" />
+
+    <style>
+      #login {
+        background-color: #e8d705;
+        height: 400px;
+        width: 400px;
+        position: absolute;
+        top: 15%;
+        left: 36%;
+        border-style: solid;
+        border-color: black;
+        border-radius: 10px;
+      }
+      body {
+        background-color: white;
+      }
+      label {
+        position: relative;
+      }
+      input {
+        position: relative;
+        border-left: 0;
+        border-right: 0;
+        border-top: 0;
+        height: 20px;
+        background-color: #e8d705;
+        width: 180px;
+      }
+      input::placeholder {
+        text-align: center;
+      }
+      #signup_btn {
+        position: relative;
+        left: 65px;
+        top: 80px;
+        height: 30px;
+        width: 250px;
+        border-radius: 10px;
+        background-color: #e85a05;
+      }
+      #signup_btn:hover {
+        background-color: beige;
+      }
+      #login_btn {
+        position: relative;
+        left: 65px;
+        top: 100px;
+        height: 30px;
+        width: 250px;
+        border-radius: 10px;
+        background-color: #e85a05;
+      }
+      #login_btn:hover {
+        background: bisque;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="login">
+      <h1
+        style="
+          position: relative;
+          left: 140px;
+          top: 20px;
+          margin: 0;
+          height: 30px;
+          width: 150px;
+        "
+      >
+        Skill Connect
+      </h1>
+      <div
+        style="
+          position: relative;
+          top: 80px;
+          left: 80px;
+          height: 50px;
+          width: 250px;
+        "
+      >
+        <label for="email" style="left: 20px">Email</label>
+        <input
+          type="text"
+          id="email"
+          placeholder="Enter your email"
+          style="right: 20px; top: 20px"
+        />
+      </div>
+
+      <div
+        style="
+          position: relative;
+          top: 90px;
+          left: 80px;
+          height: 50px;
+          width: 250px;
+        "
+      >
+        <label for="pass" style="left: 20px">Password</label>
+        <input
+          type="text"
+          id="pass"
+          placeholder="Enter your password"
+          style="right: 45px; top: 20px"
+        />
+      </div>
+      <button id="login_btn">Login</button>
+      <p style="position: relative; top: 85px; left: 73px">
+        ---------------------or---------------------
+      </p>
+      <a href="./signup_page.html">
+        <button id="signup_btn">Signup</button>
+      </a>
+    </div>
+  </body>
+  <script>
+    let email = document.getElementById("email"),
+      pass = document.getElementById("pass"),
+      btn = document.getElementById("login_btn");
+    function login() {
+      if (!email.value.includes("@")) {
+        alert("Please enter correct gmail format");
+      } else {
+        console.log("logged in:");
+        console.log(`Email:${email.value} and pass:${pass.value}`);
+        email.value = "";
+        pass.value = "";
+      }
+    }
+    email.addEventListener("keyup", (e) => {
+      if (e.keyCode === 13) {
+        pass.focus();
+      }
+    });
+    pass.addEventListener("keyup", (e) => {
+      if (e.keyCode === 13) {
+        pass.blur();
+        login();
+      }
+    });
+    btn.onclick = login;
+  </script>
+</html>
