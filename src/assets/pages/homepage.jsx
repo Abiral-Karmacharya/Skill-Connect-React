@@ -36,7 +36,6 @@ const homepage = () => {
           }}
           style={{ left: "210px", top: "60px" }}
         ></NormalButton>
-        \{" "}
       </div>
     </div>
   );

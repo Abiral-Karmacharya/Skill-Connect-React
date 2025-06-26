@@ -6,7 +6,6 @@ export const RegisterLogin = ({
   input_style,
   label_style,
   label,
-  nexref,
 }) => {
   return (
     <div>
@@ -18,11 +17,6 @@ export const RegisterLogin = ({
         placeholder={placeholder}
         id="input1"
         style={input_style}
-        onKeyUp={(e) => {
-          if (e.key === "Enter") {
-            nexref.focus();
-          }
-        }}
       />
     </div>
   );

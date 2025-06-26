@@ -12,7 +12,7 @@ export const NormalButton = ({ label, onclick, style }) => {
   );
 };
 
-export const LoginButton = ({ label, style, loc }) => {
+export const ChangeLinkButton = ({ label, style, loc }) => {
   return (
     <div>
       <Link to={loc}>
@@ -20,6 +20,16 @@ export const LoginButton = ({ label, style, loc }) => {
           {label}
         </button>
       </Link>
+    </div>
+  );
+};
+
+export const RegisterLoginButton = ({ label, style }) => {
+  return (
+    <div>
+      <button id="registerlogin_btn" style={style}>
+        {label}
+      </button>
     </div>
   );
 };

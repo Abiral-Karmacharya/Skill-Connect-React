@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/registerlogin.css";
 import { RegisterLogin } from "./components/TextFields";
-import { LoginButton } from "./components/Buttons";
+import { ChangeLinkButton, RegisterLoginButton } from "./components/Buttons";
 
 const signup = () => {
   const breaker = "---------------------or---------------------";
@@ -35,7 +35,10 @@ const signup = () => {
             input_style={{ top: "10px", left: "38px" }}
           ></RegisterLogin>
           <div id="btn_section">
-            <LoginButton label="Sign Up" style={{ top: "20px" }}></LoginButton>
+            <RegisterLoginButton
+              label="Sign Up"
+              style={{ top: "20px" }}
+            ></RegisterLoginButton>
             <div
               style={{
                 color: "black",
@@ -48,11 +51,11 @@ const signup = () => {
             >
               {breaker}
             </div>
-            <LoginButton
+            <ChangeLinkButton
               label="Login"
               loc="/login"
               style={{ top: "10px" }}
-            ></LoginButton>
+            ></ChangeLinkButton>
           </div>
         </div>
       </div>
