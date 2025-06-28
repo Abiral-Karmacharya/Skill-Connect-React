@@ -1,30 +1,53 @@
+// libraries
 import React, { useState } from "react";
-import "../styles/registerlogin.css";
+import toast from "react-hot-toast";
+import axios from "axios";
+import { useNavigate } from "react-router";
+
+// other files
 import { RegisterLogin } from "./components/TextFields";
 import { ChangeLinkButton, RegisterLoginButton } from "./components/Buttons";
-import toast from "react-hot-toast";
+import "../styles/registerlogin.css";
 
 const Login = () => {
   const breaker = "---------------------or---------------------";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   function submit() {
     if (!email || !password || !email.includes("@")) {
       toast.error("Please fill the correct information");
     } else {
-      toast.success(`email:${email}, password:${password}`);
+      return true;
     }
   }
+
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post("http://localhost:8000/user/login", {
+        email,
+        password,
+      });
+      console.log(response.data);
+      localStorage.setItem("token", response.data.token);
+      toast.success(response.data.message);
+      setInterval(navigate("/dashboard", { replace: true }), 1000);
+    } catch (error) {
+      console.error(error.response.data);
+    }
+  };
 
   return (
     <div id="registerlogin">
       <h1 id="heading">Skill Connect</h1>
       <div id="input">
         <form
-          onSubmit={(e) => {
+          onSubmit={async (e) => {
             e.preventDefault();
-            submit();
+            if (submit()) {
+              await handleLogin();
+            }
           }}
         >
           <RegisterLogin
