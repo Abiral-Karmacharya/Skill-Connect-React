@@ -27,7 +27,7 @@ export const ChangeLinkButton = ({ label, style, loc }) => {
 export const RegisterLoginButton = ({ label, style }) => {
   return (
     <div>
-      <button id="registerlogin_btn" style={style}>
+      <button id="registerlogin_btn" type="submit" style={style}>
         {label}
       </button>
     </div>

@@ -49,3 +49,14 @@
   position: relative;
   color: black;
 }
+
+#nav_main {
+  position: absolute;
+  top: -10px;
+  left: -3px;
+  height: 80px;
+  width: 100%;
+  border: solid 2px black;
+  border-right: 0;
+  background-color: #e8d705;
+}
