@@ -1,6 +1,8 @@
 import { React, useState, useEffect } from "react";
 import "../styles/dashboard-user.css";
 import { Servicebox } from "./components/service";
+import { Span } from "./components/Span";
+import { Link } from "react-router";
 const dashboard = () => {
   const [experts, setExperts] = useState([]);
   useEffect(() => {
@@ -28,6 +30,9 @@ const dashboard = () => {
             placeholder="Search for experts"
           />
         </div>
+        <Link to="/profile">
+          <Span label="Profile"></Span>
+        </Link>
       </div>
       <div id="dashboard_user_box">
         {experts.map((expert) => (

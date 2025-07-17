@@ -7,3 +7,16 @@ export const Span = ({ label, style }) => {
     </span>
   );
 };
+
+export const PricingSpan = ({ heading, content }) => {
+  return (
+    <span id="pricing_span">
+      <h2>{heading}</h2>
+      {content.map((data, index) => (
+        <li key={index} style={{ "list-style-type": "none" }}>
+          {data}
+        </li>
+      ))}
+    </span>
+  );
+};
