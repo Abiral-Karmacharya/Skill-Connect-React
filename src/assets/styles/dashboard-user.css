@@ -1,0 +1,49 @@
+#dashboard-box {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#search {
+  position: relative;
+  top: 30%;
+  left: 100px;
+  width: 500px;
+}
+
+#search-text {
+  position: relative;
+  top: 2px;
+  left: 440px;
+  height: 10px;
+  color: black;
+  cursor: pointer;
+}
+
+#search-input {
+  background-color: #e8d705;
+  color: black;
+  stroke: black;
+  height: 0.6cm;
+  width: 10cm;
+  text-align: center;
+  border: 0.4px solid black;
+  border-radius: 1em;
+}
+
+#dashboard_user_box {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  position: absolute;
+  top: 100px;
+  flex-direction: row;
+  justify-content: space-evenly;
+  height: 80%;
+  flex-wrap: wrap;
+}
+html,
+body {
+  height: 100%;
+  margin: 0;
+}

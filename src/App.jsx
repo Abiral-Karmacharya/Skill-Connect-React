@@ -4,7 +4,7 @@ import Homepage from "./assets/pages/homepage";
 import Signup from "./assets/pages/signup";
 import Login from "./assets/pages/login";
 import { Toaster } from "react-hot-toast";
-import Dashboard from "./assets/pages/dashboard";
+import Dashboard from "./assets/pages/dashboard-user";
 
 const App = () => {
   return (
@@ -17,7 +17,6 @@ const App = () => {
         <Route path="/dashboard" element={<Dashboard></Dashboard>}></Route>
       </Routes>
     </Router>
-    
   );
 };
 
