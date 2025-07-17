@@ -7,6 +7,7 @@ export const RegisterLogin = ({
   label_style,
   label,
   onchange,
+  value,
 }) => {
   return (
     <div>
@@ -19,6 +20,7 @@ export const RegisterLogin = ({
         id="input1"
         style={input_style}
         onChange={onchange}
+        value={value}
       />
     </div>
   );
