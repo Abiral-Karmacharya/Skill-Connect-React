@@ -1,0 +1,217 @@
+#profile-container {
+  min-height: 100vh;
+  background-color: white;
+}
+
+#profile-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background-color: #e8d705;
+  border-bottom: 2px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 1000;
+}
+
+#nav-buttons {
+  display: flex;
+  align-items: center;
+}
+
+#profile-main {
+  margin-top: 100px;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+#profile-form {
+  background-color: #e8d705;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 30px;
+  max-width: 600px;
+  width: 100%;
+}
+
+#profile-heading {
+  text-align: center;
+  margin-bottom: 30px;
+  color: black;
+  font-family: "merriweather_regular", serif;
+  font-size: 24pt;
+  font-weight: 400;
+}
+
+#profile-section {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.section-title {
+  color: black;
+  font-family: "merriweather_regular", serif;
+  font-size: 18pt;
+  font-weight: 400;
+  margin-bottom: 15px;
+  margin-top: 0;
+  border-bottom: 1px solid black;
+  padding-bottom: 8px;
+}
+
+.section-subtitle {
+  color: #555;
+  font-size: 12pt;
+  margin-bottom: 15px;
+  font-style: italic;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+#bio-textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 4px;
+  background-color: #e8d705;
+  color: black;
+  font-family: inherit;
+  resize: vertical;
+  margin-bottom: 15px;
+}
+
+#bio-textarea::placeholder {
+  color: #666;
+}
+
+#bio-textarea:focus {
+  outline: none;
+  border-color: #e85a05;
+  box-shadow: 0 0 5px rgba(232, 90, 5, 0.3);
+}
+
+#profile-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+#profile-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #e8d705;
+}
+
+#profile-loading h2 {
+  color: black;
+  font-family: "merriweather_regular", serif;
+  font-size: 20pt;
+}
+
+/* Override input styles for profile form */
+#profile-form input {
+  width: 100%;
+  max-width: 400px;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+#profile-form #role {
+  width: 100%;
+  max-width: 400px;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+#profile-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  #profile-nav {
+    flex-direction: column;
+    height: auto;
+    padding: 10px;
+  }
+  
+  #profile-nav h1 {
+    font-size: 18pt;
+    margin-bottom: 10px;
+  }
+  
+  #profile-main {
+    margin-top: 120px;
+    padding: 10px;
+  }
+  
+  #profile-form {
+    padding: 20px;
+  }
+  
+  #profile-heading {
+    font-size: 20pt;
+  }
+  
+  .section-title {
+    font-size: 16pt;
+  }
+  
+  #profile-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  #profile-buttons button {
+    width: 100%;
+    max-width: 200px;
+  }
+}
+
+/* Animation for smooth transitions */
+#profile-form {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Focus states for better accessibility */
+#profile-form input:focus,
+#profile-form select:focus,
+#profile-form textarea:focus {
+  outline: none;
+  border-color: #e85a05;
+  box-shadow: 0 0 5px rgba(232, 90, 5, 0.3);
+}
+
+/* Hover effects */
+#profile-section:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  transition: background-color 0.3s ease;
+}
