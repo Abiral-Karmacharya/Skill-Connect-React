@@ -21,6 +21,15 @@ const dashboard = () => {
   }, []);
   return (
     <div id="dashboard-user">
+      <div className="mb-6 text-center">
+        <h2 className="text-2xl font-bold text-gray-900 mb-4">Available Experts</h2>
+        <a 
+          href="/experts" 
+          className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+        >
+          View All Experts & Book Consultations
+        </a>
+      </div>
       <div id="dashboard_user_box">
         {experts.map((expert) => (
           <Servicebox

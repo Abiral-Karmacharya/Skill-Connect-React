@@ -14,13 +14,15 @@ import Pricing from "./assets/pages/pricing";
 import StartNav from "./assets/pages/components/StartNav";
 import Nav1 from "./assets/pages/components/Nav1";
 import Profile from "./assets/pages/profile";
+import Experts from "./assets/pages/experts";
+import Bookings from "./assets/pages/bookings";
 
 function AppRoutes() {
   const location = useLocation();
   const startnav = ["/", "/pricing"];
   const startnavshow = startnav.includes(location.pathname.toLowerCase());
 
-  const nav1 = ["/dashboard"];
+  const nav1 = ["/dashboard", "/experts", "/bookings"];
   const nav1show = nav1.includes(location.pathname.toLowerCase());
 
   return (
@@ -35,6 +37,8 @@ function AppRoutes() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/profile" element={<Profile></Profile>}></Route>
+        <Route path="/experts" element={<Experts />} />
+        <Route path="/bookings" element={<Bookings />} />
       </Routes>
     </>
   );

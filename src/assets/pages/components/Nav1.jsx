@@ -10,6 +10,19 @@ const Nav1 = () => {
         alt="hi"
         id="nav1-img"
       />
+      
+      <div className="flex items-center space-x-6">
+        <Link to="/dashboard" className="text-gray-700 hover:text-blue-600 font-medium">
+          Dashboard
+        </Link>
+        <Link to="/experts" className="text-gray-700 hover:text-blue-600 font-medium">
+          Find Experts
+        </Link>
+        <Link to="/bookings" className="text-gray-700 hover:text-blue-600 font-medium">
+          My Bookings
+        </Link>
+      </div>
+
       <input type="text" id="nav1-search" placeholder="Search for experts" />
 
       <Link to="/profile">
