@@ -2,7 +2,7 @@ import React from "react";
 import "../../styles/components.css";
 export const Span = ({ label, style }) => {
   return (
-    <span id="span" style={style}>
+    <span id="normal_span1" style={style}>
       {label}
     </span>
   );
@@ -20,3 +20,4 @@ export const PricingSpan = ({ heading, content }) => {
     </span>
   );
 };
+

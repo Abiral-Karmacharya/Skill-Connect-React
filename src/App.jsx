@@ -5,15 +5,14 @@ import {
   Routes,
   useLocation,
 } from "react-router";
+import { Toaster } from "react-hot-toast";
 import Homepage from "./assets/pages/homepage";
 import Signup from "./assets/pages/signup";
 import Login from "./assets/pages/login";
-import { Toaster } from "react-hot-toast";
 import Dashboard from "./assets/pages/dashboard-user";
 import Pricing from "./assets/pages/pricing";
 import StartNav from "./assets/pages/components/StartNav";
 import Nav1 from "./assets/pages/components/Nav1";
-
 import Profile from "./assets/pages/profile";
 
 function AppRoutes() {

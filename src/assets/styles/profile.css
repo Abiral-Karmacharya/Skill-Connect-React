@@ -10,16 +10,23 @@
   right: 0;
   height: 80px;
   background-color: #e8d705;
-  border-bottom: 2px solid black;
   display: flex;
   align-items: center;
+  border-bottom: 10px solid black;
   justify-content: space-between;
   padding: 0 20px;
   z-index: 1000;
 }
 
 #logo_heading {
-  top: -10px;
+  height: 80px;
+  width: 350px;
+  font-size: 23pt;
+  margin: 0px;
+}
+
+#logo_img {
+  height: 70px;
 }
 
 #nav-buttons {

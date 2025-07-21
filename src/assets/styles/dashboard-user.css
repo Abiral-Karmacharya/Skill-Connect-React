@@ -4,33 +4,6 @@
   flex-direction: column;
 }
 
-#search {
-  position: relative;
-  top: 30%;
-  left: 100px;
-  width: 500px;
-}
-
-#search-text {
-  position: relative;
-  top: 2px;
-  left: 440px;
-  height: 10px;
-  color: black;
-  cursor: pointer;
-}
-
-#search-input {
-  background-color: #e8d705;
-  color: black;
-  stroke: black;
-  height: 0.6cm;
-  width: 10cm;
-  text-align: center;
-  border: 0.4px solid black;
-  border-radius: 1em;
-}
-
 #dashboard_user_box {
   display: flex;
   gap: 20px;

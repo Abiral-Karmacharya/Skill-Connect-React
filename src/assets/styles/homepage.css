@@ -1,35 +1,3 @@
-#nav {
-  position: absolute;
-  top: -10px;
-  left: -3px;
-  height: 80px;
-  width: 100%;
-  border: solid 2px black;
-  border-right: 0;
-  background-color: #e8d705;
-}
-
-#logo_heading {
-  margin: 0;
-  position: relative;
-  left: 100px;
-  top: 20px;
-  cursor: pointer;
-  width: 300px;
-  font-weight: 300;
-  color: black;
-  font-family: "merriweather_regular";
-  font-size: 23pt;
-}
-
-#logo_img {
-  height: 50px;
-  width: 50px;
-  position: absolute;
-  margin: 0;
-  left: -50px;
-}
-
 #home_main {
   width: 100%;
   height: 400px;

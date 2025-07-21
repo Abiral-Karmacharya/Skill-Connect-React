@@ -11,7 +11,7 @@ export const RegisterLogin = ({
 }) => {
   return (
     <div>
-      <label htmlFor="input1" style={label_style} id="label">
+      <label htmlFor="input1" style={label_style} id="input_label1">
         {label}
       </label>
       <input

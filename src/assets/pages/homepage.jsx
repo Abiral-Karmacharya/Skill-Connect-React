@@ -1,7 +1,8 @@
 import React from "react";
+import { Link } from "react-router";
 import "../styles/homepage.css";
 import { NormalButton } from "./components/Buttons";
-import { Link } from "react-router";
+
 const homepage = () => {
   return (
     <div>

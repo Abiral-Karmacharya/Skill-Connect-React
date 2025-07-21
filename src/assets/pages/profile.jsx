@@ -7,7 +7,8 @@ import { useNavigate } from "react-router";
 // other files
 import { RegisterLogin } from "./components/TextFields";
 import { RegisterLoginButton, NormalButton } from "./components/Buttons";
-import "../styles/registerlogin.css";
+import { Span } from "../pages/components/Span";
+// import "../styles/registerlogin.css";
 import "../styles/profile.css";
 
 const Profile = () => {
@@ -43,7 +44,7 @@ const Profile = () => {
         setEmail(userData.Email || "No user data");
         setRole(userData.Role || "No user data");
         setBio(userData.Bio || "No user data");
-        setPhone(userData.PhoneNumber || "No user data");
+        setPhone(userData.PhoneNumber || "");
         setLocation(userData.Location || "No user data");
         setSkills(userData.Skills || "No user data");
         setIsLoading(false);
@@ -96,7 +97,7 @@ const Profile = () => {
       }
 
       const response = await axios.put(
-        "http://localhost:8000/user/profile",
+        "http://localhost:8000/user/updateuser",
         updateData,
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -123,7 +124,7 @@ const Profile = () => {
     ) {
       try {
         const token = localStorage.getItem("token");
-        await axios.delete("http://localhost:8000/user/profile", {
+        await axios.delete("http://localhost:8000/user/deleteuser", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -152,6 +153,7 @@ const Profile = () => {
           <img src="src\assets\pages\images\skill_connect.png" id="logo_img" />
           Skill Connect
         </h1>
+
         <div id="nav-buttons">
           <NormalButton
             label="Dashboard"
@@ -207,15 +209,7 @@ const Profile = () => {
                 <label id="label" style={{ marginBottom: "5px" }}>
                   Role
                 </label>
-                <select
-                  id="role"
-                  value={role}
-                  onChange={(e) => setRole(e.target.value)}
-                  style={{ marginBottom: "15px" }}
-                >
-                  <option value="user">User</option>
-                  <option value="expert">Expert</option>
-                </select>
+                <Span label={role}></Span>
               </div>
 
               <RegisterLogin

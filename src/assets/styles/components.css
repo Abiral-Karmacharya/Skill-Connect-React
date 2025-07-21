@@ -1,3 +1,4 @@
+/* buttons */
 #normal_btn {
   position: relative;
   border: 1px black solid;
@@ -27,7 +28,8 @@
   text-align: center;
 }
 
-#span {
+/* spans */
+#normal_span1 {
   position: relative;
   cursor: pointer;
   color: black;
@@ -35,6 +37,16 @@
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
+#pricing_span {
+  position: relative;
+  border: 1px black solid;
+  height: 50%;
+  width: 20%;
+  padding: 10px;
+  text-align: center;
+}
+
+/* input fields */
 #input1 {
   position: relative;
   border-left: 0;
@@ -45,12 +57,15 @@
   width: 180px;
 }
 
-#label {
+/* label */
+
+#input_label1 {
   position: relative;
   color: black;
 }
 
-#nav_main {
+/* Navigation bar */
+#start_nav {
   position: absolute;
   top: -10px;
   left: -3px;
@@ -61,6 +76,87 @@
   background-color: #e8d705;
 }
 
+#start_nav_logo {
+  margin: 0;
+  position: relative;
+  left: 100px;
+  cursor: pointer;
+  width: 300px;
+}
+
+#start_logo_heading {
+  font-weight: 300;
+  color: black;
+  font-family: "merriweather_regular";
+  font-size: 23pt;
+}
+
+#start_logo_img {
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  margin: 0;
+  left: -50px;
+}
+
+#start_links {
+  position: relative;
+  top: -40px;
+}
+
+#nav1 {
+  position: absolute;
+  height: 80px;
+  width: 99.9%;
+  border: solid 2px black;
+  border-right: 0;
+  background-color: #e8d705;
+}
+
+#nav1-search {
+  position: relative;
+  top: 20%;
+  left: 8%;
+  background-color: #e8d705;
+  color: black;
+  stroke: black;
+  height: 0.6cm;
+  width: 10cm;
+  text-align: center;
+  border: 0.4px solid black;
+  border-radius: 1em;
+}
+
+#nav1-profile {
+  position: relative;
+  left: 95%;
+  top: -30%;
+  height: 60px;
+  width: 60px;
+}
+
+#nav1-img {
+  position: absolute;
+  height: 80px;
+  left: 30px;
+}
+
+#nav1-profile-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid black;
+}
+
+#nav1-profile-text {
+  color: black;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  left: 5px;
+}
+
+/* expert */
 #role {
   background-color: #e85a05;
   position: relative;
@@ -81,11 +177,16 @@
   width: 300px;
 }
 
-#pricing_span {
+#service-img {
+  height: 100px;
+}
+
+#service-par {
+  margin: 0;
+  padding: 0;
   position: relative;
-  border: 1px black solid;
-  height: 50%;
-  width: 20%;
-  padding: 10px;
-  text-align: center;
+  left: 40%;
+  top: -90%;
+  height: 160px;
+  width: 180px;
 }
