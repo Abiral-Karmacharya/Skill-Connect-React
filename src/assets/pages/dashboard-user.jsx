@@ -1,7 +1,9 @@
 import { React, useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 import "../styles/dashboard-user.css";
 import { Servicebox } from "./components/service";
 const dashboard = () => {
+  const navigate = useNavigate();
   const [experts, setExperts] = useState([]);
   useEffect(() => {
     const fetchExperts = async () => {
@@ -19,6 +21,10 @@ const dashboard = () => {
     };
     fetchExperts();
   }, []);
+
+  const handleClick = (expertID) => {
+    navigate(`/booking/${expertID}`);
+  };
   return (
     <div id="dashboard-user">
       <div id="dashboard_user_box">
@@ -27,6 +33,7 @@ const dashboard = () => {
             key={expert.UserID} // Use _id for MongoDB documents
             label={expert.Name} // Assuming the expert object has a name field
             skill={expert.Bio}
+            onclick={() => handleClick(expert.UserID)}
             style={{}} // Add any custom styles here if needed
           />
         ))}

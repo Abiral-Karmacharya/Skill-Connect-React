@@ -1,0 +1,243 @@
+import { React, useEffect, useState } from "react";
+import "../styles/logs.css";
+import axios from "axios";
+
+const LogsPage = ({ userType }) => {
+  const [logs, setLogs] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [filter, setFilter] = useState("all"); // all, pending, completed, cancelled
+
+  useEffect(() => {
+    const fetchLogs = async () => {
+      try {
+        setIsLoading(true);
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+          setError("Authentication token not found");
+          return;
+        }
+
+        const response = await axios.get(`http://localhost:8000/user/getlogs`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setLogs(response.data);
+        setError(null);
+      } catch (err) {
+        console.error("Error fetching logs:", err);
+        setError("Failed to fetch logs. Please try again.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchLogs();
+  }, [userType]);
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
+  const getStatusColor = (status) => {
+    switch (status?.toLowerCase()) {
+      case "completed":
+        return "#28a745";
+      case "pending":
+        return "#ffc107";
+      case "in-progress":
+        return "#007bff";
+      case "cancelled":
+        return "#dc3545";
+      default:
+        return "#6c757d";
+    }
+  };
+
+  const filteredLogs = logs.filter((log) => {
+    if (filter === "all") return true;
+    return log.status?.toLowerCase() === filter;
+  });
+
+  if (isLoading) {
+    return (
+      <div id="logs">
+        <div className="logs-loading">
+          <div className="loading-spinner"></div>
+          <p>Loading logs...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div id="logs">
+        <div className="logs-error">
+          <h2>Error</h2>
+          <p>{error}</p>
+          <button
+            className="retry-btn"
+            onClick={() => window.location.reload()}
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div id="logs">
+      <div className="logs-header">
+        <h1>{userType === "expert" ? "Expert Dashboard" : "My Bookings"}</h1>
+        <p className="logs-subtitle">
+          {userType === "expert"
+            ? "Manage your client projects and services"
+            : "Track your booking history and current projects"}
+        </p>
+      </div>
+
+      <div className="logs-filters">
+        <button
+          className={`filter-btn ${filter === "all" ? "active" : ""}`}
+          onClick={() => setFilter("all")}
+        >
+          All ({logs.length})
+        </button>
+        <button
+          className={`filter-btn ${filter === "pending" ? "active" : ""}`}
+          onClick={() => setFilter("pending")}
+        >
+          Pending (
+          {logs.filter((log) => log.status?.toLowerCase() === "pending").length}
+          )
+        </button>
+        <button
+          className={`filter-btn ${filter === "in-progress" ? "active" : ""}`}
+          onClick={() => setFilter("in-progress")}
+        >
+          In Progress (
+          {
+            logs.filter((log) => log.status?.toLowerCase() === "in-progress")
+              .length
+          }
+          )
+        </button>
+        <button
+          className={`filter-btn ${filter === "completed" ? "active" : ""}`}
+          onClick={() => setFilter("completed")}
+        >
+          Completed (
+          {
+            logs.filter((log) => log.status?.toLowerCase() === "completed")
+              .length
+          }
+          )
+        </button>
+      </div>
+
+      <div id="logs-container">
+        {filteredLogs.length === 0 ? (
+          <div className="no-logs">
+            <div className="no-logs-icon">📋</div>
+            <h3>No {filter !== "all" ? filter : ""} logs found</h3>
+            <p>
+              {userType === "expert"
+                ? "You haven't received any client requests yet."
+                : "You haven't made any bookings yet."}
+            </p>
+          </div>
+        ) : (
+          filteredLogs.map((log) => (
+            <div key={log.ServiceID} className="log-card">
+              <div className="log-header">
+                <h3 className="log-title">{log.Title || "Untitled Project"}</h3>
+                <span
+                  className="log-status"
+                  style={{ backgroundColor: getStatusColor(log.status) }}
+                >
+                  {log.status || "Pending"}
+                </span>
+              </div>
+
+              <div className="log-content">
+                <div className="log-description">
+                  <p>{log.Description || "No description available"}</p>
+                </div>
+
+                <div className="log-details">
+                  <div className="log-detail-item">
+                    <span className="detail-label">
+                      {userType === "expert" ? "Client:" : "Expert:"}
+                    </span>
+                    <span className="detail-value">
+                      {log.Expert || "Not specified"}
+                    </span>
+                  </div>
+
+                  {log.budget && (
+                    <div className="log-detail-item">
+                      <span className="detail-label">Budget:</span>
+                      <span className="detail-value">${log.budget}</span>
+                    </div>
+                  )}
+
+                  {log.deadline && (
+                    <div className="log-detail-item">
+                      <span className="detail-label">Deadline:</span>
+                      <span className="detail-value">
+                        {formatDate(log.deadline)}
+                      </span>
+                    </div>
+                  )}
+
+                  <div className="log-detail-item">
+                    <span className="detail-label">Created:</span>
+                    <span className="detail-value">
+                      {formatDate(log.createdAt || log.service?.createdAt)}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="log-actions">
+                <button className="action-btn view-btn">View Details</button>
+                {log.status?.toLowerCase() === "pending" && (
+                  <>
+                    {userType === "expert" ? (
+                      <>
+                        <button className="action-btn accept-btn">
+                          Accept
+                        </button>
+                        <button className="action-btn decline-btn">
+                          Decline
+                        </button>
+                      </>
+                    ) : (
+                      <button className="action-btn cancel-btn">Cancel</button>
+                    )}
+                  </>
+                )}
+                {log.status?.toLowerCase() === "completed" && (
+                  <button className="action-btn review-btn">
+                    {userType === "expert" ? "View Review" : "Leave Review"}
+                  </button>
+                )}
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default LogsPage;

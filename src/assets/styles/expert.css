@@ -1,0 +1,22 @@
+#expert {
+  display: flex;
+  position: fixed;
+  height: 90vh;
+  width: 100%;
+  top: 12vh;
+  flex-direction: column;
+}
+
+#expert-info {
+  position: relative;
+  left: 100px;
+  top: 100px;
+}
+
+#expert
+
+#expert-image {
+  position: relative;
+  height: 100px;
+  width: 100px;
+}

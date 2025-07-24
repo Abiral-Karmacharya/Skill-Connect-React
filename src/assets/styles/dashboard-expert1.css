@@ -1,0 +1,133 @@
+#booking-page {
+  margin-top: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: scroll;
+}
+
+#booking_container {
+  max-width: 600px;
+  width: 100%;
+  background: #e8d705;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+
+}
+
+.expert_info {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.expert_info h2 {
+  margin: 0 0 10px 0;
+  color: #333;
+  font-size: 24px;
+}
+
+.expert_bio {
+  color: #666;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.booking_form h3 {
+  margin: 0 0 20px 0;
+  color: #333;
+  font-size: 20px;
+}
+
+.form_group {
+  margin-bottom: 20px;
+}
+
+.form_group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333;
+}
+
+.form_group input,
+.form_group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  font-family: inherit;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+  background-color: #e8d705;;
+}
+
+.form_group input:focus,
+.form_group textarea:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.form_group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.submit_btn {
+  width: 100%;
+  padding: 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit_btn:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.submit_btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.loading,
+.error {
+  text-align: center;
+  padding: 40px;
+  font-size: 18px;
+}
+
+.loading {
+  color: #666;
+}
+
+.error {
+  color: #e74c3c;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  #booking_container {
+    margin: 20px;
+    padding: 20px;
+    margin-top: 80px;
+  }
+
+  .expert_info h2 {
+    font-size: 20px;
+  }
+
+  .booking_form h3 {
+    font-size: 18px;
+  }
+}

@@ -105,7 +105,7 @@
 }
 
 #nav1 {
-  position: absolute;
+  position: fixed;
   height: 80px;
   width: 99.9%;
   border: solid 2px black;
@@ -189,4 +189,38 @@
   top: -90%;
   height: 160px;
   width: 180px;
+}
+
+.logs {
+  border: 2px solid black;
+  width: 70vh;
+  border-radius: 10px;
+  height: 60px;
+}
+
+#logs-heading {
+  position: relative;
+  left: 10px;
+  font-size: 10pt;
+  margin: 0;
+  padding: 0;
+  width: 100px;
+}
+
+#logs-expert {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  left: 10px;
+  width: 150px;
+  top:10px;
+}
+
+#logs-status {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  left: 250px;
+  width: 100px;
+  top:-10px;
 }
