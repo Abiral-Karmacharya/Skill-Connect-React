@@ -2,7 +2,7 @@ import { React, useEffect, useState } from "react";
 import "../styles/logs.css";
 import axios from "axios";
 
-const LogsPage = ({ userType }) => {
+const LogsPage = () => {
   const [logs, setLogs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -23,6 +23,7 @@ const LogsPage = ({ userType }) => {
           headers: { Authorization: `Bearer ${token}` },
         });
         setLogs(response.data);
+        console.log(response.data);
         setError(null);
       } catch (err) {
         console.error("Error fetching logs:", err);
@@ -33,7 +34,40 @@ const LogsPage = ({ userType }) => {
     };
 
     fetchLogs();
-  }, [userType]);
+  }, []);
+
+  const acceptservice = async (serviceId) => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.put(
+        `http://localhost:8000/user/acceptservice/${serviceId}`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      alert("Service accepted successfully!");
+    } catch (err) {
+      console.error("Error accepting service:", err);
+      alert("Failed to accept service. Please try again.");
+    }
+  };
+
+  const declineservice = async (serviceId) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      await axios.put(
+        `http://localhost:8000/user/declineservice/${serviceId}`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      alert("Service declined successfully!");
+    } catch (err) {
+      console.error("Error declining service:", err);
+      alert("Failed to decline service. Please try again.");
+    }
+  };
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -94,6 +128,8 @@ const LogsPage = ({ userType }) => {
     );
   }
 
+  const userType = logs[0].userType;
+  console.log(logs);
   return (
     <div id="logs">
       <div className="logs-header">
@@ -179,14 +215,14 @@ const LogsPage = ({ userType }) => {
                       {userType === "expert" ? "Client:" : "Expert:"}
                     </span>
                     <span className="detail-value">
-                      {log.Expert || "Not specified"}
+                      {log.Name || "Not specified"}
                     </span>
                   </div>
 
                   {log.budget && (
                     <div className="log-detail-item">
                       <span className="detail-label">Budget:</span>
-                      <span className="detail-value">${log.budget}</span>
+                      <span className="detail-value">Rs{log.Price}</span>
                     </div>
                   )}
 
@@ -214,10 +250,20 @@ const LogsPage = ({ userType }) => {
                   <>
                     {userType === "expert" ? (
                       <>
-                        <button className="action-btn accept-btn">
+                        <button
+                          className="action-btn accept-btn"
+                          onClick={() => {
+                            acceptservice(log.ServiceID);
+                          }}
+                        >
                           Accept
                         </button>
-                        <button className="action-btn decline-btn">
+                        <button
+                          className="action-btn decline-btn"
+                          onClick={() => {
+                            declineservice(log.ServiceID);
+                          }}
+                        >
                           Decline
                         </button>
                       </>
