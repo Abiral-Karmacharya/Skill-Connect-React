@@ -156,6 +156,20 @@
   left: 5px;
 }
 
+#nav1-logs {
+  position: absolute;
+  top: 10pt;
+  left: 88%;
+  width: 50px;
+  height: 60px;
+}
+
+#nav1-logs-img {
+  position: relative;
+  left:5px;
+  height: 60px;
+}
+
 /* expert */
 #role {
   background-color: #e85a05;
@@ -213,7 +227,7 @@
   position: relative;
   left: 10px;
   width: 150px;
-  top:10px;
+  top: 10px;
 }
 
 #logs-status {
@@ -222,5 +236,5 @@
   position: relative;
   left: 250px;
   width: 100px;
-  top:-10px;
+  top: -10px;
 }

@@ -7,6 +7,7 @@ const LogsPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [filter, setFilter] = useState("all"); // all, pending, completed, cancelled
+  const [expandedLog, setExpandedLog] = useState(null);
 
   useEffect(() => {
     const fetchLogs = async () => {
@@ -67,6 +68,10 @@ const LogsPage = () => {
       console.error("Error declining service:", err);
       alert("Failed to decline service. Please try again.");
     }
+  };
+
+  const toggleLogDetails = (serviceId) => {
+    setExpandedLog(expandedLog === serviceId ? null : serviceId);
   };
 
   const formatDate = (dateString) => {
@@ -210,6 +215,36 @@ const LogsPage = () => {
                 </div>
 
                 <div className="log-details">
+                  {expandedLog === log.ServiceID && (
+                    <div className="expanded-details">
+                      <div className="expanded-section">
+                        <h4>Additional Information</h4>
+                        <div className="log-detail-item">
+                          <span className="detail-label">Service ID:</span>
+                          <span className="detail-value">{log.ServiceID}</span>
+                        </div>
+                        <div className="log-detail-item">
+                          <span className="detail-label">User Type:</span>
+                          <span className="detail-value">{log.userType}</span>
+                        </div>
+                        {log.Email && (
+                          <div className="log-detail-item">
+                            <span className="detail-label">Contact:</span>
+                            <span className="detail-value">{log.Email}</span>
+                          </div>
+                        )}
+                        {log.PhoneNumber && (
+                          <div className="log-detail-item">
+                            <span className="detail-label">Phone:</span>
+                            <span className="detail-value">
+                              {log.PhoneNumber}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
                   <div className="log-detail-item">
                     <span className="detail-label">
                       {userType === "expert" ? "Client:" : "Expert:"}
@@ -219,18 +254,18 @@ const LogsPage = () => {
                     </span>
                   </div>
 
-                  {log.budget && (
+                  {log.Price && (
                     <div className="log-detail-item">
                       <span className="detail-label">Budget:</span>
                       <span className="detail-value">Rs{log.Price}</span>
                     </div>
                   )}
 
-                  {log.deadline && (
+                  {log.Deadline && (
                     <div className="log-detail-item">
                       <span className="detail-label">Deadline:</span>
                       <span className="detail-value">
-                        {formatDate(log.deadline)}
+                        {formatDate(log.Deadline)}
                       </span>
                     </div>
                   )}
@@ -245,7 +280,16 @@ const LogsPage = () => {
               </div>
 
               <div className="log-actions">
-                <button className="action-btn view-btn">View Details</button>
+                <button
+                  className="action-btn view-btn"
+                  onClick={() => {
+                    toggleLogDetails(log.ServiceID);
+                  }}
+                >
+                  {expandedLog === log.ServiceID
+                    ? "Hide Details"
+                    : "View Details"}
+                </button>
                 {log.status?.toLowerCase() === "pending" && (
                   <>
                     {userType === "expert" ? (

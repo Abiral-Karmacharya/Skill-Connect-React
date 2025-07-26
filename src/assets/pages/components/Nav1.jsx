@@ -12,6 +12,11 @@ const Nav1 = () => {
       />
       <input type="text" id="nav1-search" placeholder="Search for experts" />
 
+      <Link to="/logs">
+      <div id="nav1-logs">
+      <img src="src\assets\pages\images\logs.png" alt="" id="nav1-logs-img"/>
+      </div>
+      </Link>
       <Link to="/profile">
         <div id="nav1-profile">
           <div id="nav1-profile-img"></div>
