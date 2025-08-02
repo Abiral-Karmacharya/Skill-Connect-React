@@ -148,9 +148,9 @@ const LogsPage = () => {
         const reviewsText = response.data
           .map(
             (review) =>
-              `Rating: ${review.rating}/5\nComment: ${
-                review.comment
-              }\nDate: ${new Date(review.createdAt).toLocaleDateString()}`
+              `Rating: ${review.Rating}/5\nComment: ${
+                review.Comment
+              }\nDate: ${new Date(review.CreatedAt).toLocaleDateString()}`
           )
           .join("\n\n");
         alert(`Reviews for this service:\n\n${reviewsText}`);
