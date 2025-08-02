@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import "../styles/dashboard-user.css";
 import { Servicebox } from "./components/service";
 const dashboard = () => {
-  const { navigate } = useNavigate();
+  const navigate = useNavigate();
   const [experts, setExperts] = useState([]);
   useEffect(() => {
     const fetchExperts = async () => {

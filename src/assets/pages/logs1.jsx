@@ -8,7 +8,13 @@ const LogsPage = () => {
   const [error, setError] = useState(null);
   const [filter, setFilter] = useState("all"); // all, pending, completed, cancelled
   const [expandedLog, setExpandedLog] = useState(null);
-
+  const [showReviewModal, setShowReviewModal] = useState(false);
+  const [selectedServiceId, setSelectedServiceId] = useState(null);
+  const [reviewData, setReviewData] = useState({
+    rating: 5,
+    comment: "",
+    expertId: "",
+  });
   useEffect(() => {
     const fetchLogs = async () => {
       try {
@@ -70,6 +76,92 @@ const LogsPage = () => {
     }
   };
 
+  const completeService = async (serviceId) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      await axios.put(
+        `http://localhost:8000/user/completeservice/${serviceId}`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      alert("Service marked as completed successfully!");
+
+      // Refresh the logs to show updated status
+      window.location.reload();
+    } catch (err) {
+      console.error("Error completing service:", err);
+      alert("Failed to complete service. Please try again.");
+    }
+  };
+
+  const submitReview = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      if (!reviewData.comment.trim()) {
+        alert("Please enter a review comment");
+        return;
+      }
+
+      await axios.post(
+        `http://localhost:8000/user/submitreview`,
+        {
+          serviceId: selectedServiceId,
+          expertId: reviewData.expertId,
+          rating: reviewData.rating,
+          comment: reviewData.comment.trim(),
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      alert("Review submitted successfully!");
+      setShowReviewModal(false);
+      setReviewData({ rating: 5, comment: "", expertId: "" });
+      setSelectedServiceId(null);
+
+      // Refresh to show updated data
+      window.location.reload();
+    } catch (err) {
+      console.error("Error submitting review:", err);
+      alert("Failed to submit review. Please try again.");
+    }
+  };
+
+  const openReviewModal = (serviceId, expertId) => {
+    setSelectedServiceId(serviceId);
+    setReviewData({ ...reviewData, expertId: expertId });
+    setShowReviewModal(true);
+  };
+
+  // Add function to view existing reviews
+  const viewReviews = async (serviceId) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(
+        `http://localhost:8000/user/getreviews/${serviceId}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      if (response.data.length > 0) {
+        const reviewsText = response.data
+          .map(
+            (review) =>
+              `Rating: ${review.rating}/5\nComment: ${
+                review.comment
+              }\nDate: ${new Date(review.createdAt).toLocaleDateString()}`
+          )
+          .join("\n\n");
+        alert(`Reviews for this service:\n\n${reviewsText}`);
+      } else {
+        alert("No reviews found for this service.");
+      }
+    } catch (err) {
+      console.error("Error fetching reviews:", err);
+      alert("Failed to fetch reviews.");
+    }
+  };
   const toggleLogDetails = (serviceId) => {
     setExpandedLog(expandedLog === serviceId ? null : serviceId);
   };
@@ -279,7 +371,7 @@ const LogsPage = () => {
                 </div>
               </div>
 
-              <div className="log-actions">
+              {/* <div className="log-actions">
                 <button
                   className="action-btn view-btn"
                   onClick={() => {
@@ -290,6 +382,7 @@ const LogsPage = () => {
                     ? "Hide Details"
                     : "View Details"}
                 </button>
+
                 {log.status?.toLowerCase() === "pending" && (
                   <>
                     {userType === "expert" ? (
@@ -316,14 +409,171 @@ const LogsPage = () => {
                     )}
                   </>
                 )}
+
+                {log.status?.toLowerCase() === "in-progress" &&
+                  userType === "expert" && (
+                    <button
+                      className="action-btn complete-btn"
+                      onClick={() => {
+                        if (
+                          window.confirm(
+                            "Are you sure you want to mark this service as completed?"
+                          )
+                        ) {
+                          completeService(log.ServiceID);
+                        }
+                      }}
+                    >
+                      Mark as Complete
+                    </button>
+                  )}
+
                 {log.status?.toLowerCase() === "completed" && (
                   <button className="action-btn review-btn">
                     {userType === "expert" ? "View Review" : "Leave Review"}
                   </button>
                 )}
+              </div> */}
+
+              <div className="log-actions">
+                <button
+                  className="action-btn view-btn"
+                  onClick={() => {
+                    toggleLogDetails(log.ServiceID);
+                  }}
+                >
+                  {expandedLog === log.ServiceID
+                    ? "Hide Details"
+                    : "View Details"}
+                </button>
+
+                {log.status?.toLowerCase() === "pending" && (
+                  <>
+                    {userType === "expert" ? (
+                      <>
+                        <button
+                          className="action-btn accept-btn"
+                          onClick={() => {
+                            acceptservice(log.ServiceID);
+                          }}
+                        >
+                          Accept
+                        </button>
+                        <button
+                          className="action-btn decline-btn"
+                          onClick={() => {
+                            declineservice(log.ServiceID);
+                          }}
+                        >
+                          Decline
+                        </button>
+                      </>
+                    ) : (
+                      <button className="action-btn cancel-btn">Cancel</button>
+                    )}
+                  </>
+                )}
+
+                {/* Add this new section for in-progress tasks */}
+                {log.status?.toLowerCase() === "in-progress" &&
+                  userType === "expert" && (
+                    <button
+                      className="action-btn complete-btn"
+                      onClick={() => {
+                        if (
+                          window.confirm(
+                            "Are you sure you want to mark this service as completed?"
+                          )
+                        ) {
+                          completeService(log.ServiceID);
+                        }
+                      }}
+                    >
+                      Mark as Complete
+                    </button>
+                  )}
+
+                {log.status?.toLowerCase() === "completed" && (
+                  <button
+                    className="action-btn review-btn"
+                    onClick={() => {
+                      if (userType === "expert") {
+                        viewReviews(log.ServiceID);
+                      } else {
+                        openReviewModal(
+                          log.ServiceID,
+                          log.ExpertID || log.UserID
+                        );
+                      }
+                    }}
+                  >
+                    {userType === "expert" ? "View Reviews" : "Leave Review"}
+                  </button>
+                )}
               </div>
             </div>
           ))
+        )}
+        {showReviewModal && (
+          <div className="review-modal-overlay">
+            <div className="review-modal">
+              <h3>Leave a Review</h3>
+
+              <div className="rating-section">
+                <label>Rating:</label>
+                <div className="star-rating">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <span
+                      key={star}
+                      className={`star ${
+                        reviewData.rating >= star ? "filled" : ""
+                      }`}
+                      onClick={() =>
+                        setReviewData({ ...reviewData, rating: star })
+                      }
+                    >
+                      ★
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="comment-section">
+                <label>Your Review:</label>
+                <textarea
+                  className="comment-textarea"
+                  placeholder="Share your experience with this expert..."
+                  value={reviewData.comment}
+                  onChange={(e) =>
+                    setReviewData({ ...reviewData, comment: e.target.value })
+                  }
+                  maxLength={500}
+                />
+                <small style={{ color: "#666", fontSize: "12px" }}>
+                  {reviewData.comment.length}/500 characters
+                </small>
+              </div>
+
+              <div className="modal-actions">
+                <button
+                  className="modal-btn cancel-modal-btn"
+                  onClick={() => {
+                    setShowReviewModal(false);
+                    setReviewData({ rating: 5, comment: "", expertId: "" });
+                    setSelectedServiceId(null);
+                  }}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="modal-btn submit-review-btn"
+                  onClick={submitReview}
+                >
+                  Submit Review
+                </button>
+              </div>
+            </div>
+          </div>
         )}
       </div>
     </div>
