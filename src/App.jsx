@@ -21,7 +21,7 @@ function AppRoutes() {
   const startnav = ["/", "/pricing"];
   const startnavshow = startnav.includes(location.pathname.toLowerCase());
 
-  const nav1 = ["/dashboard", "/booking", "/logs"];
+  const nav1 = ["/booking", "/logs"];
   const nav1show = nav1.includes(location.pathname.toLowerCase());
 
   return (
