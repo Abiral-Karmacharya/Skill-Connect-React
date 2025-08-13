@@ -82,7 +82,7 @@ const Dashboard = () => {
     <div>
       {/* Include the navigation bar */}
       <Nav1 onSearch={handleSearch} />
-
+    
       <div id="dashboard-user">
         {/* Search results info */}
         {searchQuery && (

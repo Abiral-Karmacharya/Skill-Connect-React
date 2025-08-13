@@ -91,6 +91,8 @@ const BookingPage = () => {
     );
   }
 
+  console.log(expert);
+
   if (!expert) {
     return (
       <div id="booking-page">

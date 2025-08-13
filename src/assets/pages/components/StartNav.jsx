@@ -19,7 +19,6 @@ const StartNav = () => {
         </h1>
       </div>
       <div id="start_links">
-        <Span label="Contact Us" style={{ left: "40%" }}></Span>
         <Link to="/signup">
           <Span label="Sign Up" style={{ left: "41%" }}></Span>
         </Link>

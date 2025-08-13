@@ -114,7 +114,7 @@
 }
 
 #nav1-search {
-  position: relative;
+  position: absolute;
   top: 20%;
   left: 8%;
   background-color: #e8d705;
@@ -128,9 +128,9 @@
 }
 
 #nav1-profile {
-  position: relative;
+  position: absolute;
   left: 95%;
-  top: -30%;
+  top: 5%;
   height: 60px;
   width: 60px;
 }
@@ -240,4 +240,3 @@
 }
 
 /*search bar*/
-

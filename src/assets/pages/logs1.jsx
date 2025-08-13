@@ -15,6 +15,7 @@ const LogsPage = () => {
     comment: "",
     expertId: "",
   });
+
   useEffect(() => {
     const fetchLogs = async () => {
       try {
@@ -29,12 +30,26 @@ const LogsPage = () => {
         const response = await axios.get(`http://localhost:8000/user/getlogs`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setLogs(response.data);
-        console.log(response.data);
+
+        // Fix: Extract the actual array from the response
+        const logsData =
+          response.data?.formattedServices || response.data || [];
+        console.log("Response data:", response.data);
+        console.log("Logs data:", logsData);
+
+        // Ensure we have an array
+        if (Array.isArray(logsData)) {
+          setLogs(logsData);
+        } else {
+          console.error("Expected array but got:", typeof logsData, logsData);
+          setLogs([]);
+        }
+
         setError(null);
       } catch (err) {
         console.error("Error fetching logs:", err);
         setError("Failed to fetch logs. Please try again.");
+        setLogs([]); // Ensure logs is always an array
       } finally {
         setIsLoading(false);
       }
@@ -53,6 +68,8 @@ const LogsPage = () => {
       );
 
       alert("Service accepted successfully!");
+
+      window.location.reload();
     } catch (err) {
       console.error("Error accepting service:", err);
       alert("Failed to accept service. Please try again.");
@@ -70,6 +87,8 @@ const LogsPage = () => {
       );
 
       alert("Service declined successfully!");
+
+      window.location.reload();
     } catch (err) {
       console.error("Error declining service:", err);
       alert("Failed to decline service. Please try again.");
@@ -88,11 +107,30 @@ const LogsPage = () => {
 
       alert("Service marked as completed successfully!");
 
-      // Refresh the logs to show updated status
       window.location.reload();
     } catch (err) {
       console.error("Error completing service:", err);
       alert("Failed to complete service. Please try again.");
+    }
+  };
+
+  const cancelledservice = async (serviceId) => {
+    console.log(serviceId);
+    try {
+      const token = localStorage.getItem("token");
+
+      await axios.put(
+        `http://localhost:8000/user/cancelledservice/${serviceId}`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      alert("Service marked as cancelled!");
+
+      window.location.reload();
+    } catch (err) {
+      console.error("Error cancelling service:", err);
+      alert("Failed to cancel service. Please try again.");
     }
   };
 
@@ -162,6 +200,7 @@ const LogsPage = () => {
       alert("Failed to fetch reviews.");
     }
   };
+
   const toggleLogDetails = (serviceId) => {
     setExpandedLog(expandedLog === serviceId ? null : serviceId);
   };
@@ -192,10 +231,13 @@ const LogsPage = () => {
     }
   };
 
-  const filteredLogs = logs.filter((log) => {
-    if (filter === "all") return true;
-    return log.status?.toLowerCase() === filter;
-  });
+  // Fix: Add safety check for array before filtering
+  const filteredLogs = Array.isArray(logs)
+    ? logs.filter((log) => {
+        if (filter === "all") return true;
+        return log.status?.toLowerCase() === filter;
+      })
+    : [];
 
   if (isLoading) {
     return (
@@ -225,8 +267,9 @@ const LogsPage = () => {
     );
   }
 
-  const userType = logs[0].userType;
-  console.log(logs);
+  const userType =
+    Array.isArray(logs) && logs.length > 0 ? logs[0].userType : "user";
+
   return (
     <div id="logs">
       <div className="logs-header">
@@ -243,14 +286,17 @@ const LogsPage = () => {
           className={`filter-btn ${filter === "all" ? "active" : ""}`}
           onClick={() => setFilter("all")}
         >
-          All ({logs.length})
+          All ({Array.isArray(logs) ? logs.length : 0})
         </button>
         <button
           className={`filter-btn ${filter === "pending" ? "active" : ""}`}
           onClick={() => setFilter("pending")}
         >
           Pending (
-          {logs.filter((log) => log.status?.toLowerCase() === "pending").length}
+          {Array.isArray(logs)
+            ? logs.filter((log) => log.status?.toLowerCase() === "pending")
+                .length
+            : 0}
           )
         </button>
         <button
@@ -258,10 +304,10 @@ const LogsPage = () => {
           onClick={() => setFilter("in-progress")}
         >
           In Progress (
-          {
-            logs.filter((log) => log.status?.toLowerCase() === "in-progress")
-              .length
-          }
+          {Array.isArray(logs)
+            ? logs.filter((log) => log.status?.toLowerCase() === "in-progress")
+                .length
+            : 0}
           )
         </button>
         <button
@@ -269,10 +315,10 @@ const LogsPage = () => {
           onClick={() => setFilter("completed")}
         >
           Completed (
-          {
-            logs.filter((log) => log.status?.toLowerCase() === "completed")
-              .length
-          }
+          {Array.isArray(logs)
+            ? logs.filter((log) => log.status?.toLowerCase() === "completed")
+                .length
+            : 0}
           )
         </button>
       </div>
@@ -371,70 +417,6 @@ const LogsPage = () => {
                 </div>
               </div>
 
-              {/* <div className="log-actions">
-                <button
-                  className="action-btn view-btn"
-                  onClick={() => {
-                    toggleLogDetails(log.ServiceID);
-                  }}
-                >
-                  {expandedLog === log.ServiceID
-                    ? "Hide Details"
-                    : "View Details"}
-                </button>
-
-                {log.status?.toLowerCase() === "pending" && (
-                  <>
-                    {userType === "expert" ? (
-                      <>
-                        <button
-                          className="action-btn accept-btn"
-                          onClick={() => {
-                            acceptservice(log.ServiceID);
-                          }}
-                        >
-                          Accept
-                        </button>
-                        <button
-                          className="action-btn decline-btn"
-                          onClick={() => {
-                            declineservice(log.ServiceID);
-                          }}
-                        >
-                          Decline
-                        </button>
-                      </>
-                    ) : (
-                      <button className="action-btn cancel-btn">Cancel</button>
-                    )}
-                  </>
-                )}
-
-                {log.status?.toLowerCase() === "in-progress" &&
-                  userType === "expert" && (
-                    <button
-                      className="action-btn complete-btn"
-                      onClick={() => {
-                        if (
-                          window.confirm(
-                            "Are you sure you want to mark this service as completed?"
-                          )
-                        ) {
-                          completeService(log.ServiceID);
-                        }
-                      }}
-                    >
-                      Mark as Complete
-                    </button>
-                  )}
-
-                {log.status?.toLowerCase() === "completed" && (
-                  <button className="action-btn review-btn">
-                    {userType === "expert" ? "View Review" : "Leave Review"}
-                  </button>
-                )}
-              </div> */}
-
               <div className="log-actions">
                 <button
                   className="action-btn view-btn"
@@ -469,12 +451,18 @@ const LogsPage = () => {
                         </button>
                       </>
                     ) : (
-                      <button className="action-btn cancel-btn">Cancel</button>
+                      <button
+                        className="action-btn cancel-btn"
+                        onClick={() => {
+                          cancelledservice(log.ServiceID);
+                        }}
+                      >
+                        Cancel
+                      </button>
                     )}
                   </>
                 )}
 
-                {/* Add this new section for in-progress tasks */}
                 {log.status?.toLowerCase() === "in-progress" &&
                   userType === "expert" && (
                     <button
@@ -514,6 +502,7 @@ const LogsPage = () => {
             </div>
           ))
         )}
+
         {showReviewModal && (
           <div className="review-modal-overlay">
             <div className="review-modal">

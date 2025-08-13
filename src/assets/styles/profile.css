@@ -19,13 +19,17 @@
 }
 
 #logo_heading {
+  position: relative;
   height: 80px;
   width: 350px;
   font-size: 23pt;
   margin: 0px;
+  top: -20%;
 }
 
 #logo_img {
+  position: relative;
+  top:20px;
   height: 70px;
 }
 

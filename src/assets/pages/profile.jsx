@@ -39,7 +39,8 @@ const Profile = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        const userData = response.data;
+        console.log(response.data);
+        const userData = response.data.users;
         setName(userData.Name || "No user data");
         setEmail(userData.Email || "No user data");
         setRole(userData.Role || "No user data");
